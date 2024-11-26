@@ -51,6 +51,14 @@ const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN);
 
 const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE });
 
+// Split the data into chunks
+const splitter = new RecursiveCharacterTextSplitter({
+    // Total number of characters in each chunk
+    chunkSize: 512,
+    // The overlapping characters between chunks. This helps us preserve the cross chunk context
+    chunkOverlap: 100
+});
+
 
 const createCollection = async ( similarityMetric: SimilarityMetric = "dot_product" ) => {
     const res = await db.createCollection(ASTRA_DB_COLLECTION, { vector: {
@@ -61,4 +69,27 @@ const createCollection = async ( similarityMetric: SimilarityMetric = "dot_produ
 
     console.log("Response:\t", res);
     
+}
+
+// Create a function that allow to grab the URLs collected above, chunk them up and create a Vector Embeddings out of them so they can be put in the in the vector database
+const loadSampleData = async () => {
+    // Look for the collection that had been created earlier
+    const collection = await db.collection(ASTRA_DB_COLLECTION)
+
+    for await( const url of f1Data ){
+        // Scrape each individual URL 
+        const content = await scrapePage(url);
+        // Create chunks from the scraped data
+        const chunks = await splitter.splitText(content);
+        // Create Vector Embeddings out of each chunks, by iterating through the collection of chunks
+        for await(const chunk of chunks ){
+            const embedding = await openAi.embeddings.create({
+                model: "text-embedding-3-small",
+                // The input data that needs to be processed and converted into a vector embedding
+                input: chunk,
+                // Define the encoding format for the generated embedding, "float" indicates the use of floating-point numbers in the output embedding vector
+                encoding_format: "float"
+            });
+        }
+    }
 }
