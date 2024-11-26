@@ -51,3 +51,14 @@ const client = new DataAPIClient(ASTRA_DB_APPLICATION_TOKEN);
 
 const db = client.db(ASTRA_DB_API_ENDPOINT, { namespace: ASTRA_DB_NAMESPACE });
 
+
+const createCollection = async ( similarityMetric: SimilarityMetric = "dot_product" ) => {
+    const res = await db.createCollection(ASTRA_DB_COLLECTION, { vector: {
+        // This is important as the dimension size should match. The embedding size for text-embedding-3-small Open AI is 1536, and the embedding size in DataStax for open AI is 1536, which matches here.
+        dimension: 1536,
+        metric: similarityMetric
+    } })
+
+    console.log("Response:\t", res);
+    
+}
