@@ -79,17 +79,17 @@ const scrapePage = async (url: string) => {
         },
         // gotoOptions is added here to wait for the content to load. 
         gotoOptions:{
-            waitUntil: "documentloded"
+            waitUntil: "domcontentloaded"
         },
         // evaluate() is to evaluate the JS code on the page. This is useful for extracting data from the page or for interacting with page elements.
         evaluate: async (page, browser) => {
-            const result = await page.evaluate(() => document.body.innerHTML);
-            await browser.close();
+            const result = await page.evaluate(() => document.body.innerHTML)
+            await browser.close()
             return result
         }
     });
     // Only interested in a text content so that we can feed it to our AI to create relevant responses, so use the regular expression to strip out the HTML tags from the page content
-    return ( await loader.scrape())?.replace(/<[^>]*>?/gm,)
+    return ( await loader.scrape())?.replace(/<[^>]*>?/gm,'')
 }
 
 // Create a function that allow to grab the URLs collected above, chunk them up and create a Vector Embeddings out of them so they can be put in the in the vector database
@@ -142,11 +142,14 @@ const loadSampleData = async () => {
                 $vector: vector,
                 text: chunk
             });
+
+            console.log(`The response: ${res}`);
+            
         }
     }
 }
 
-
+createCollection().then(() => loadSampleData())
 
 
 
