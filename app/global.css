@@ -1,0 +1,73 @@
+*{
+    font-family: Anurati, Tahoma, sans-serif;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    background: url('assets/bg.png') no-repeat center center/cover; 
+}
+
+main{
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    border-radius: 15px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom,#f8f8f8, #cfcfcf);
+    padding: 20px;
+    color: #383838;
+}
+
+section{
+    width: 100%;
+}
+
+section.populated{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: scroll;
+}
+
+.starter-text{
+    padding: 0 80px;
+}
+
+form{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    border-top: 2px solid #828282;
+    padding-top: 20px;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+}
+
+input.question-box{
+    width: 85%;
+    padding: 10px;
+    font-size: 15px;
+    color: #383838;
+    border: none;
+}
+
+input[type="submit"]{
+    width: 15%;
+    padding: 10px;
+    background-color: #411b8d;
+    color: #fff;
+    border: none;
+    font-size: 15px;
+}
+
+input:focus{
+    outline: none;
+}
