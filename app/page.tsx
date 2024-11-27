@@ -4,11 +4,25 @@ import Image from "next/image";
 import logo from "./assets/logo.png";
 import { useChat } from "ai/react";
 
+import { Bubble, LoadingBubble, PromptSuggestionsRow } from "./components"
+import { Message } from "ai";
+
 export default function Home() {
 
     const { append, isLoading, messages, input, handleInputChange, handleSubmit } = useChat();
 
-    const noMessagea = true;
+    const noMessagea = false;
+
+    const handlePrompt = (promptText) => {
+
+        const msg: Message = {
+            id: crypto.randomUUID(),
+            content: promptText,
+            role: "user",
+        };
+
+        append(msg);
+    }
 
     return (
         <main>
@@ -22,12 +36,12 @@ export default function Home() {
                             We hope you enjoy!
                         </p>
                         <br />
-                        {/* <PromptSuggestionRow /> */}
+                        <PromptSuggestionsRow onPromptClick={handlePrompt} />
                     </>
                 ) : (
                     <>
-                        {/* Map messages onto text bubbles */}
-                        {/* <LoadingBubble /> */}
+                        {messages.map((message, index) => <Bubble key={`message-${index}`} message={message} />)}
+                        <LoadingBubble />
                     </>
                 )}
 
