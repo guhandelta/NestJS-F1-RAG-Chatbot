@@ -83,8 +83,19 @@ input:focus{
     text-align: left;
 }
 
+.bubble.user{
+    border-radius: 20px 20px 0 20px;
+    border-color: #E1F4FFFF;
+    margin-left: auto;
+}
+
+.bubble.ai{
+    border-radius: 20px 20px 20px 0;
+    background-color: #dce7ff;
+}
+
 .promptSuggestionsButton{
-    
+
 }
 
 .loader{
