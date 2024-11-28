@@ -1,4 +1,4 @@
-// Send on the data from the DB to the app, Use OpenAI to make the data more readable
+// Send on the data from the DB to the app, Use OpenAI to make teh data more readable
 
 import { DataAPIClient } from "@datastax/astra-db-ts";
 import { OpenAIStream, StreamingTextResponse } from "@vercel/ai-utils";
@@ -101,9 +101,7 @@ export async function POST(req: Request){
 
         const stream = OpenAIStream(res);
 
-        return new Response(stream, {
-            headers: { 'Content-Type': 'text/event-stream' }
-        });
+        return new StreamingTextResponse(stream)
     } catch (error) {
         console.log(`Error in POST request:\t ${error}`);
         return new Response("Error", {status: 500});
