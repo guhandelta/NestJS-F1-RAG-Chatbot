@@ -2,7 +2,7 @@
 import { DataAPIClient } from "@datastax/astra-db-ts";
 import { PuppeteerWebBaseLoader } from "@langchain/community/document_loaders/web/puppeteer";
 
-// When loading teh Webpages, which contain a lot of content in this case about Formula One, when we ask LLMs questions, they work best when we feed them just enough for them to give an accurate answer so we will split up large bodies of texts into a smaller chunks that are easily searchable and digestible
+// When loading the Webpages, which contain a lot of content in this case about Formula One, when we ask LLMs questions, they work best when we feed them just enough for them to give an accurate answer so we will split up large bodies of texts into a smaller chunks that are easily searchable and digestible
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import OpenAI from "openai";
 

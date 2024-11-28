@@ -11,9 +11,9 @@ export default function Home() {
 
     const { append, isLoading, messages, input, handleInputChange, handleSubmit } = useChat();
 
-    const noMessagea = false;
+    const noMessagea = !messages.length || messages.length === 0;
 
-    const handlePrompt = (promptText) => {
+    const handlePrompt = promptText => {
 
         const msg: Message = {
             id: crypto.randomUUID(),
@@ -41,7 +41,7 @@ export default function Home() {
                 ) : (
                     <>
                         {messages.map((message, index) => <Bubble key={`message-${index}`} message={message} />)}
-                        <LoadingBubble />
+                        { isLoading && <LoadingBubble />}
                     </>
                 )}
 
@@ -54,4 +54,3 @@ export default function Home() {
     );
 }
 
-// export default Home
